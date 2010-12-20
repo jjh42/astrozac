@@ -1,0 +1,16 @@
+{
+  "name": "Astrozac",
+  "description": "For astronomy in the clouds",
+  "version": "0.0.0.1",
+  "app": {
+    "urls": [
+      "http://astrozac.42quarks.com/"
+    ],
+    "launch": {
+      "web_url": "http://astrozac.42quarks.com"
+    }
+  },  
+  "icons": { "16": "app-icon16.png",
+           "48": "app-icon48.png",
+          "128": "app-icon128.png" }
+}

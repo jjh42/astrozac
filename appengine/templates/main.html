@@ -1,0 +1,37 @@
+{% extends "basewlogin.html" %}
+
+
+{% block styles %}
+<link rel="stylesheet" href="css/jquery.fileupload-ui.css">
+{% endblock %}
+
+{% block title %}
+Main
+{% endblock %}
+
+{% block pagecontent %}
+<form class="upload" action="{{ upload_url }}" method="POST" enctype="multipart/form-data">
+    <input type="file" name="file" multiple>
+    <button>Upload</button>
+    <div>Upload files</div>
+</form> 
+<table class="upload_files"></table>
+<table class="download_files"></table>
+<hr/>
+
+<hr/>
+<hr/>
+<div>
+  <form action="{{ upload_url }}" method="POST"
+  enctype="multipart/form-data">
+  <input type="file" name="file" multiple/>
+  <input type="submit" value="Submit" />
+  </form>
+</div>
+{% endblock %}
+
+{% block code %}
+<script src="javascript/jquery.fileupload.js"></script>
+<script src="javascript/jquery.fileupload-ui.js"></script>
+<script src="javascript/main.js"></script> 
+{% endblock %}

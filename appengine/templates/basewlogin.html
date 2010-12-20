@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block topheader %}
+
+<div id="header">{{ nickname }}
+<div style="float: right;">
+  <a href="settings">Settings</a> | 
+  <a href="{{ logout_url }}" id="logout">Logout</a></div>
+  <hr/>
+</div>
+
+<div id="pagetitle" style="color: aqua">
+  {% block title %}
+  {% endblock %}
+</div>
+{% endblock %}
+
+
+
+{% block content %}
+<div id="pagecontent" style="margin: 10px; padding: 2px; border-style: solid;
+  height: 85%">
+  {% block pagecontent %}
+  {% endblock %}
+</div>
+
+{% endblock %}
+

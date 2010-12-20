@@ -1,0 +1,13 @@
+{% extends "basewlogin.html" %}
+
+{% block title %}
+Settings
+{% endblock %}
+
+{% block pagecontent %}
+<form action="settings" method="post">
+{{ form.as_p }}
+<input type="submit" value="Submit" />
+</form>
+
+{% endblock %}
