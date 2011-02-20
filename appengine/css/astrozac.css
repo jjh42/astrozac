@@ -1,0 +1,8 @@
+body {
+	background-color:#2158b5;
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+}
+
+a:link {color: #799dda; text-decoration: underline; }
+a:visited {color: #799dda; text-decoration: underline; }
+a:hover {color: #88aff2; text-decoration: underline; }
