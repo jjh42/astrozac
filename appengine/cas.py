@@ -25,6 +25,8 @@ def dedup(blobs):
     of any new blobs for future comparision (in the ExtBlobInfo class)."""
     def _dedup(blob):
         logging.info('Deduplicating blob %s' % blob.key())
+        if blob.size == 0:
+            logging.warning('Upload blob of length 0')
         newblobhash = blob_sha512(blob).hexdigest()
         dup = db.Query(ExtBlobInfo).filter('blobhash', newblobhash).get()
         if dup:

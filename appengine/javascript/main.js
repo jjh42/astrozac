@@ -62,8 +62,9 @@ function uploaderClass()
 	for (i = 0; i < this.files.length; i++) {
 	    var file = this.files[i].file;
 	    var dataurl = this.files[i].dataurl;
-	    console.debug('Encode', file);
-	    var fileContent = dataurl.substring(5);
+	    var encoding = 'base64'
+	    var fileContent = dataurl.substring(dataurl.indexOf(',') + 1);
+	    console.debug('URL:' + fileContent);
 	    formData += '--' + topBoundary + '\r\n' +
 		'Content-Disposition: form-data; name="file"; ' +   
 		'filename="' + unescape(encodeURIComponent(file.name)) + '"' +
@@ -72,7 +73,7 @@ function uploaderClass()
 		'Content-Transfer-Encoding: base64 ' + '\r\n\r\n' + 
 		fileContent + '\r\n';
 	}
-	formData += '--' + topBoundary + '--\r\n';// + topBoundary + '--\r\n';
+	formData += '--' + topBoundary + '--\r\n';
 	console.debug('Form data\r\n', formData);
 	return formData;
     }
