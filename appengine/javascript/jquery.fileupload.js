@@ -37,7 +37,7 @@
         inputChangeCalled,
 
         isXHRUploadCapable = function () {
-            return typeof XMLHttpRequest !== undef && typeof File !== undef && (
+uil            return typeof XMLHttpRequest !== undef && typeof File !== undef && (
                 settings.streaming || typeof FormData !== undef || typeof FileReader !== undef
             );
         },
@@ -93,25 +93,25 @@
             });
         },
 
-        initUploadEventHandlers = function (files, index, xhr, settings) {
+        initUploadEventHandlers = function (files, xhr, settings) {
             if (typeof settings.progress === 'function') {
                 xhr.upload.onprogress = function (e) {
-                    settings.progress(e, files, index, xhr, settings);
+                    settings.progress(e, files, xhr, settings);
                 };
             }
             if (typeof settings.load === 'function') {
                 xhr.onload = function (e) {
-                    settings.load(e, files, index, xhr, settings);
+                    settings.load(e, files, xhr, settings);
                 };
             }
             if (typeof settings.abort === 'function') {
                 xhr.onabort = function (e) {
-                    settings.abort(e, files, index, xhr, settings);
+                    settings.abort(e, files, xhr, settings);
                 };
             }
             if (typeof settings.error === 'function') {
                 xhr.onerror = function (e) {
-                    settings.error(e, files, index, xhr, settings);
+                    settings.error(e, files, xhr, settings);
                 };
             }
         },
@@ -152,33 +152,36 @@
             return formData;
         },
 
-        uploadFile = function (files, index, xhr, settings) {
+        uploadFiles = function (files, xhr, settings) {
 	    // Modified here to handle our special uploading logic.
 	    // We need to first find and upload the .log file if it exists
 	    // and then upload the image files.
-
+	    var fileReader;
 	    // First find if we have a log file.
-	    
-	    console.debug(files)
-            var file = files[index],
-                formData, fileReader;
-            initUploadEventHandlers(files, index, xhr, settings);
+	    console.debug('Uploading files', files);  
+            initUploadEventHandlers(files, xhr, settings);
             xhr.open(settings.method, settings.url, true);
             xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-            if (settings.streaming) {
-                xhr.setRequestHeader('X-File-Name', unescape(encodeURIComponent(file.name)));
-                xhr.setRequestHeader('Content-Type', file.type);
-                xhr.send(file);
-            } else {
-                if (typeof FormData !== undef) {
-                    formData = new FormData();
-                    $.each(getFormData(settings), function (index, field) {
-                        formData.append(field.name, field.value);
-                    });
-                    formData.append(settings.fieldName, file);
-                    xhr.send(formData);
-                } else if (typeof FileReader !== undef) {
-                    fileReader = new FileReader();
+
+
+	    fileReader = new FileReader();
+	    fileReader.onload = function(e) {
+		// Convert image to png by loading the image into a ca
+		console.debug('Loading image', e);
+		var img;
+		img = Image(); 
+		img.onload = function() {
+		    console.debug('Imaged loaded - converting to png');
+		    var ctx = Canvas();
+		    ctx.width = img.width; ctx.height = img.height;
+		    ctx.drawImage(img, 0,0, img.width, img.height);
+		}
+		img.
+	    };
+	    for(i = 
+
+	    return;
+
                     fileReader.onload = function (e) {
                         var fileContent = e.target.result,
                             boundary = '----MultiPartFormBoundary' + (new Date()).getTime();
@@ -191,62 +194,15 @@
                         ));
                     };
                     fileReader.readAsBinaryString(file);
-                } else {
-                    $.error('Browser does neither support FormData nor FileReader interface');
-                }
-            }
         },
 
-        handleFile = function (files, index) {
-            var xhr = new XMLHttpRequest();
-            if (typeof settings.init === 'function') {
-                settings.init(files, index, xhr, function (options) {
-                    uploadFile(files, index, xhr, $.extend({}, settings, options));
-                });
-            } else {
-                uploadFile(files, index, xhr, settings);
-            }
+        handleFile = function (files) {
+	    handleFiles(files);
         },
 
         handleFiles = function (files) {
-            for (var i = 0; i < files.length; i += 1) {
-                handleFile(files, i);
-            }
-        },
-
-        legacyUpload = function (input, settings) {
-            uploadForm.attr('action', settings.url)
-                .attr('target', iframe.attr('name'));
-            if (typeof settings.load === 'function') {
-                iframe.unbind('load.' + settings.namespace)
-                    .bind('load.' + settings.namespace, function (e) {
-                    settings.load(e, [{name: input.value, type: null, size: null}], 0, null, settings);
-                });
-            }
-            var formData = getFormData(settings);
-            uploadForm.find(':input[type!=file]').not(':disabled')
-                .attr('disabled', true).addClass(settings.namespace + '_disabled');
-            $.each(formData, function (index, field) {
-                uploadForm.append(
-                    $('<input type="hidden"/>')
-                        .attr('name', field.name).val(field.value)
-                        .addClass(settings.namespace + '_form_data')
-                );
-            });
-            uploadForm.get(0).submit();
-            uploadForm.find('.' + settings.namespace + '_disabled')
-                .removeAttr('disabled').removeClass(settings.namespace + '_disabled');
-            uploadForm.find('.' + settings.namespace + '_form_data').remove();
-        },
-
-        handleLegacyUpload = function (input) {
-            if (typeof settings.init === 'function') {
-                settings.init([{name: input.value, type: null, size: null}], 0, null, function (options) {
-                    legacyUpload(input, $.extend({}, settings, options));
-                });
-            } else {
-                legacyUpload(input, settings);
-            }
+            var xhr = new XMLHttpRequest();
+	    uploadFiles(files, xhr, settings);
         };
         
         this.documentDragEnter = function (e) {

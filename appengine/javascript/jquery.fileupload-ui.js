@@ -71,7 +71,7 @@
             }
         };
         
-        this.abort = function (event, files, index, xhr, settings) {
+        this.abort = function (event, files, xhr, settings) {
             if (settings.uploadRow) {
                 settings.uploadRow.fadeOut(function () {
                     $(this).remove();
@@ -79,7 +79,7 @@
             }
         };
         
-        this.progress = function (event, files, index, xhr, settings) {
+        this.progress = function (event, files, xhr, settings) {
             if (settings.progressbar) {
                 settings.progressbar.progressbar(
                     'value',
@@ -88,7 +88,7 @@
             }
         };
         
-        this.load = function (event, files, index, xhr, settings) {
+        this.load = function (event, files, xhr, settings) {
             if (settings.uploadRow) {
                 settings.uploadRow.fadeOut(function () {
                     $(this).remove();

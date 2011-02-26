@@ -2,7 +2,15 @@
 
 
 {% block styles %}
-<link rel="stylesheet" href="css/jquery.fileupload-ui.css">
+<link rel="stylesheet" href="css/jquery.jgrowl.css">
+<style type='text/css'>
+#dropbox {padding:20px;  border: solid 1px green; }
+#dropbox.drag { border: solid 1px red; }
+#preview { margin-top:10px; }
+#preview>div { border: solid 2px; margin:20px; padding:10px;}
+#preview pre { margin:20px 0; border: solid 2px #d88; }
+#preview pre.done { border-color: #8d8; }
+</style>
 {% endblock %}
 
 {% block title %}
@@ -10,28 +18,22 @@ Main
 {% endblock %}
 
 {% block pagecontent %}
-<form class="upload" action="{{ upload_url }}" method="POST" enctype="multipart/form-data">
-    <input type="file" name="file" multiple>
-    <button>Upload</button>
-    <div>Upload files</div>
-</form> 
-<table class="upload_files"></table>
-<table class="download_files"></table>
 <hr/>
-
-<hr/>
-<hr/>
-<div>
-  <form action="{{ upload_url }}" method="POST"
-  enctype="multipart/form-data">
-  <input type="file" name="file" multiple/>
-  <input type="submit" value="Submit" />
+<div id="upload">
+  <form method="POST" id="upload_form" action="{{ upload_url }}">
+    <input type="file" id="fileElement" name="file" multiple />
+    <div id="dropbox">Drag and drop files from your desktop here</div>
   </form>
+  <div id="fileList">
+    <div id="preview"></div>
+  </div>
 </div>
+</hr>
+
 {% endblock %}
 
 {% block code %}
-<script src="javascript/jquery.fileupload.js"></script>
-<script src="javascript/jquery.fileupload-ui.js"></script>
-<script src="javascript/main.js"></script> 
+<script src="javascript/jquery.jgrowl.js"></script>
+<script src="javascript/filereader.js"></script>
+<script src="javascript/main.js"></script>
 {% endblock %}

@@ -1,7 +1,7 @@
 {
   "name": "Astrozac",
   "description": "For astronomy in the clouds",
-  "version": "0.0.0.1",
+  "version": "0.0.0.2",
   "app": {
     "urls": [
       "http://astrozac.42quarks.com/"
