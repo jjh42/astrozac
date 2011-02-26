@@ -63,13 +63,13 @@ function uploaderClass()
 	    var file = this.files[i].file;
 	    var dataurl = this.files[i].dataurl;
 	    console.debug('Encode', file);
-	    var fileContent = dataurl;
+	    var fileContent = dataurl.substring(5);
 	    formData += '--' + topBoundary + '\r\n' +
 		'Content-Disposition: form-data; name="file"; ' +   
 		'filename="' + unescape(encodeURIComponent(file.name)) + '"' +
 		'\r\n' + 
 		'Content-Type: ' + file.type + '\r\n';
-		'Content-Transfer-Encoding: binary ' + '\r\n\r\n' + 
+		'Content-Transfer-Encoding: base64 ' + '\r\n\r\n' + 
 		fileContent + '\r\n';
 	}
 	formData += '--' + topBoundary + '--\r\n';// + topBoundary + '--\r\n';
