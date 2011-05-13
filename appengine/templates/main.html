@@ -19,21 +19,11 @@ Main
 
 {% block pagecontent %}
 <hr/>
-<div id="upload">
-  <form method="POST" id="upload_form" action="{{ upload_url }}">
-    <input type="file" id="fileElement" name="file" multiple />
-    <div id="dropbox">Drag and drop files from your desktop here</div>
-  </form>
-  <div id="fileList">
-    <div id="preview"></div>
-  </div>
-</div>
+Upload <a href="upload">files</a>.
 </hr>
 
 {% endblock %}
 
 {% block code %}
-<script src="javascript/jquery.jgrowl.js"></script>
-<script src="javascript/filereader.js"></script>
 <script src="javascript/main.js"></script>
 {% endblock %}

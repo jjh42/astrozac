@@ -22,11 +22,11 @@ class User(db.Model):
 
 
 
-class Log(db.Model):
+class File(db.Model):
     owner = db.UserProperty(required=True)
-    raw = blobstore.BlobReferenceProperty(required=True) # For data security the raw input of every log file is kept.
-
-
-class Image(db.Model):
-    owner = db.UserProperty(required=True)
-    data = blobstore.BlobReferenceProperty(required=True)
+    blob = blobstore.BlobReferenceProperty(required=True) # For data security the raw input of every log file is kept.
+    mimetype = db.TextProperty()
+    head = db.SelfReferenceProperty()
+    filesize = db.IntegerProperty()
+    filename = db.TextProperty()
+    creation_date = db.DateTimeProperty(auto_now_add=True, required=True)

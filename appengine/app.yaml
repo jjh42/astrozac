@@ -3,6 +3,9 @@ version: 1
 runtime: python
 api_version: 1
 
+builtins:
+- deferred: on
+
 handlers:
 - url: /javascript
   static_dir: javascript
@@ -24,6 +27,10 @@ handlers:
 - url: /api/.*
   login: required
   script: api.py
+
+- url: /file
+  login: required
+  script: main.py
 
 - url: /.*
   script: main.py

@@ -29,16 +29,18 @@ class WithUserPage(webapp.RequestHandler):
 
 class MainPage(WithUserPage):
     def get(self):
-        self.render_template('main.html',
-                             {'upload_url': blobstore.create_upload_url('/api/handleupload')})
+        self.render_template('main.html', {})
 
+class UploadPage(WithUserPage):
+    def get(self):
+        self.render_template('upload.html', {'upload_url': blobstore.create_upload_url('/api/handleupload')})
 
 class SettingsPage(WithUserPage):
     class SettingsForm(djangoforms.ModelForm):
         class Meta:
             model = models.User
             exclude = ['user']
-        
+    
     def get(self):
         logging.info('Populating form')
         logging.info(self.get_current_user_entity().initials)
@@ -60,8 +62,10 @@ class SettingsPage(WithUserPage):
 
 
 application = webapp.WSGIApplication(
-                                     [('/', MainPage),
-                                      ('/settings', SettingsPage)],
+                                     [('/settings', SettingsPage),
+                                      ('/upload', UploadPage),
+                                      ('/', MainPage),
+                                      ],
                                      debug=True)
 
 
